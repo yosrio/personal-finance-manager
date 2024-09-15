@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin;
+use App\Http\Controllers\Admin\FinanceHub;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,17 @@ use App\Http\Controllers\Admin;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::group([
+    'middleware' => ['auth'],
+    'prefix' => '/financehub',
+    'as' => 'financehub',
+    ], function () {
+        Route::get('/categories', [FinanceHub\CategoriesController::class, 'index'])->name('_categories');
+        Route::get('/transactions', [FinanceHub\TransactionController::class, 'index'])->name('_transactions');
+        Route::get('/budgets', [FinanceHub\BudgetController::class, 'index'])->name('_budgets');
+        Route::get('/financial-insights', [FinanceHub\FinancialInsightController::class, 'index'])->name('_financial_insights');
+});
 
 Route::group([
     'prefix' => '/',

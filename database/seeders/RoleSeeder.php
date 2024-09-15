@@ -38,7 +38,14 @@ class RoleSeeder extends Seeder
                         ],
                         "settings" => [
                             "configuration",
-                            "integration"
+                            "integration",
+                            "cache_management"
+                        ],
+                        "financehub" => [
+                            "transactions",
+                            "categories",
+                            "budgets",
+                            "financial_insights"
                         ]
                     ]
                 )
