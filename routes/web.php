@@ -21,6 +21,11 @@ Route::group([
     'as' => 'financehub',
     ], function () {
         Route::get('/categories', [FinanceHub\CategoriesController::class, 'index'])->name('_categories');
+        Route::post('/categories', [FinanceHub\CategoriesController::class, 'save'])->name('_categories_save');
+        Route::get('/categories/add', [FinanceHub\CategoriesController::class, 'addOrUpdate'])->name('_categories_add');
+        Route::get('/categories/delete/{id}', [FinanceHub\CategoriesController::class, 'delete'])->name('_categories_delete');
+        Route::get('/categories/update/{id}', [FinanceHub\CategoriesController::class, 'addOrUpdate'])->name('_categories_update');
+
         Route::get('/transactions', [FinanceHub\TransactionController::class, 'index'])->name('_transactions');
         Route::get('/budgets', [FinanceHub\BudgetController::class, 'index'])->name('_budgets');
         Route::get('/financial-insights', [FinanceHub\FinancialInsightController::class, 'index'])->name('_financial_insights');
