@@ -29,4 +29,9 @@ class Transactions extends Model
         'description',
         'transaction_date',
     ];
+
+    public function category()
+    {
+        return $this->belongsTo(Categories::class);
+    }
 }

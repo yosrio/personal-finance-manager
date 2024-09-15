@@ -17,7 +17,7 @@
                 <div class="card-header">
                     <h3 class="card-title"></h3>
                 </div>
-                <form id="userForm" method="POST" action="{{ route('financehub_categories_save') }}">
+                <form id="categoriesForm" method="POST" action="{{ route('financehub_categories_save') }}">
                     @csrf
                     <div class="card-body">
                         <div class="form-group">
@@ -38,7 +38,7 @@
                     <div class="card-footer">
                         <input type="hidden" name="id" value="{{isset($category) ? $category->id : ''}}" />
                         <button type="submit" class="btn btn-primary">Save</button>
-                        <a type="submit" href="{{ route('users') }}" class="btn btn-danger">Cancel</a>
+                        <a type="submit" href="{{ route('financehub_categories') }}" class="btn btn-danger">Cancel</a>
                     </div>
                 </form>
             </div>

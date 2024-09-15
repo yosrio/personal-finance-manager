@@ -24,4 +24,9 @@ class Categories extends Model
     protected $fillable = [
         'name',
     ];
+
+    public function transactions()
+    {
+        return $this->hasMany(Transactions::class);
+    }
 }
