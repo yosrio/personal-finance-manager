@@ -42,7 +42,7 @@
                   continue;
                 @endphp
               @endif
-              <ul class="nav nav-treeview">
+              <ul class="nav nav-treeview" style="margin-left: 20px;">
                 <li class="nav-item">
                   <a href="{{ route($menu['route']) }}" class="nav-link">
                     <i class="{{ $menu['icon'] }} nav-icon"></i>

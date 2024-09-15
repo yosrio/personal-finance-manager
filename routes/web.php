@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin;
+use App\Http\Controllers\Admin\FinanceHub;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,27 @@ use App\Http\Controllers\Admin;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::group([
+    'middleware' => ['auth'],
+    'prefix' => '/financehub',
+    'as' => 'financehub',
+    ], function () {
+        Route::get('/categories', [FinanceHub\CategoriesController::class, 'index'])->name('_categories');
+        Route::post('/categories', [FinanceHub\CategoriesController::class, 'save'])->name('_categories_save');
+        Route::get('/categories/add', [FinanceHub\CategoriesController::class, 'addOrUpdate'])->name('_categories_add');
+        Route::get('/categories/delete/{id}', [FinanceHub\CategoriesController::class, 'delete'])->name('_categories_delete');
+        Route::get('/categories/update/{id}', [FinanceHub\CategoriesController::class, 'addOrUpdate'])->name('_categories_update');
+
+        Route::get('/transactions', [FinanceHub\TransactionController::class, 'index'])->name('_transactions');
+        Route::post('/transactions', [FinanceHub\TransactionController::class, 'save'])->name('_transactions_save');
+        Route::get('/transactions/add', [FinanceHub\TransactionController::class, 'addOrUpdate'])->name('_transactions_add');
+        Route::get('/transactions/delete/{id}', [FinanceHub\TransactionController::class, 'delete'])->name('_transactions_delete');
+        Route::get('/transactions/update/{id}', [FinanceHub\TransactionController::class, 'addOrUpdate'])->name('_transactions_update');
+
+        Route::get('/budgets', [FinanceHub\BudgetController::class, 'index'])->name('_budgets');
+        Route::get('/financial-insights', [FinanceHub\FinancialInsightController::class, 'index'])->name('_financial_insights');
+});
 
 Route::group([
     'prefix' => '/',

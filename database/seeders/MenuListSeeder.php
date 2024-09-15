@@ -129,10 +129,48 @@ class MenuListSeeder extends Seeder
                             "menu_title" => "Integration",
                             "route" => "settings_integration",
                             "icon" => "fas fa-link"
+                        ],[
+                            "menu_id" => "cache_management",
+                            "menu_title" => "Cache Management",
+                            "route" => "settings_cache_management",
+                            "icon" => "fas fa-database"
                         ]
                     ]
                 ]),
                 'sort_order' => 60
+            ],
+            [
+                'menu_group' => 'Financehub',
+                'menu_item' =>  json_encode([
+                    "menu_id" => "financehub",
+                    "menu_title" => "Finance Hub",
+                    "route" => "#",
+                    "icon" => "fas fa-wallet",
+                    "items" =>  [
+                        [
+                            "menu_id" => "transactions",
+                            "menu_title" => "Transactions",
+                            "route" => "financehub_transactions",
+                            "icon" => "fas fa-exchange-alt"
+                        ],[
+                            "menu_id" => "categories",
+                            "menu_title" => "Categories",
+                            "route" => "financehub_categories",
+                            "icon" => "fas fa-tags"
+                        ],[
+                            "menu_id" => "budgets",
+                            "menu_title" => "Budgets",
+                            "route" => "financehub_budgets",
+                            "icon" => "fas fa-balance-scale"
+                        ],[
+                            "menu_id" => "financial_insights",
+                            "menu_title" => "Financial Insights",
+                            "route" => "financehub_financial_insights",
+                            "icon" => "fas fa-chart-line"
+                        ]
+                    ]
+                ]),
+                'sort_order' => 10
             ]
         ];
         MenuList::upsert($menuData, ['menu_group']);

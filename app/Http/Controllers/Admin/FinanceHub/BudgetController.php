@@ -1,24 +1,24 @@
 <?php
 
 /**
- * DashboardController
+ * BudgetController
  *
  * PHP version 8.3
  *
- * @package  App\Http\Controllers\Admin
+ * @package  App\Http\Controllers\Admin\FinanceHub
  * @category Controllers
  * @author   Yos Rio
  * @license  http://opensource.org/licenses/MIT MIT License
  */
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\FinanceHub;
 
 /**
- * DashboardController
+ * BudgetController
  *
  * This controller handles dashboard.
  */
-class DashboardController extends \App\Http\Controllers\Controller
+class BudgetController extends \App\Http\Controllers\Controller
 {
     /**
      * Method index
@@ -27,6 +27,6 @@ class DashboardController extends \App\Http\Controllers\Controller
      */
     public function index()
     {
-        return view('admin.dashboard.index');
+        return view('admin.financehub.budgets.index');
     }
 }
