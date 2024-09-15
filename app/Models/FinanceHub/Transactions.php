@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\FinanceHub;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Categories extends Model
+class Transactions extends Model
 {
     use HasFactory;
 
@@ -14,7 +14,7 @@ class Categories extends Model
      *
      * @var string
      */
-    public $table = "categories";
+    public $table = "transactions";
 
     /**
      * The attributes that are mass assignable.
@@ -22,6 +22,11 @@ class Categories extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'user_id',
+        'amount',
+        'type',
+        'category_id',
+        'description',
+        'transaction_date',
     ];
 }
