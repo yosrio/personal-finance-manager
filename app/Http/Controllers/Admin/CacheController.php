@@ -14,6 +14,7 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Log;
 
 /**
  * CacheController
@@ -42,8 +43,9 @@ class CacheController extends \App\Http\Controllers\Controller
         try {
             Artisan::call('cache:clear');
             return redirect(route('settings_cache_management'))
-                ->with('success', 'Successfuly to clear cache.');
+                ->with('success', 'Successfully to clear cache.');
         } catch (\Exception $e) {
+            Log::channel('exceptions')->error($e);
             return redirect(route('settings_cache_management'))
                 ->with('error', 'Something went wrong.');
         }
@@ -59,8 +61,9 @@ class CacheController extends \App\Http\Controllers\Controller
         try {
             Artisan::call('config:clear');
             return redirect(route('settings_cache_management'))
-                ->with('success', 'Successfuly to clear cache configuration.');
+                ->with('success', 'Successfully to clear cache configuration.');
         } catch (\Exception $e) {
+            Log::channel('exceptions')->error($e);
             return redirect(route('settings_cache_management'))
                 ->with('error', 'Something went wrong.');
         }
@@ -76,8 +79,9 @@ class CacheController extends \App\Http\Controllers\Controller
         try {
             Artisan::call('route:clear');
             return redirect(route('settings_cache_management'))
-                ->with('success', 'Successfuly to clear cache route.');
+                ->with('success', 'Successfully to clear cache route.');
         } catch (\Exception $e) {
+            Log::channel('exceptions')->error($e);
             return redirect(route('settings_cache_management'))
                 ->with('error', 'Something went wrong.');
         }
@@ -93,8 +97,9 @@ class CacheController extends \App\Http\Controllers\Controller
         try {
             Artisan::call('view:clear');
             return redirect(route('settings_cache_management'))
-                ->with('success', 'Successfuly to clear cache view.');
+                ->with('success', 'Successfully to clear cache view.');
         } catch (\Exception $e) {
+            Log::channel('exceptions')->error($e);
             return redirect(route('settings_cache_management'))
                 ->with('error', 'Something went wrong.');
         }
