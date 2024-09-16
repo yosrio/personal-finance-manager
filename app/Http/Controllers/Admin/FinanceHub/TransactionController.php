@@ -33,8 +33,10 @@ class TransactionController extends \App\Http\Controllers\Controller
      */
     public function index()
     {
-        $transactions = Transactions::with('category')->get();
-        return view('admin.financehub.transactions.index', ['transactions' => $transactions]);
+        $roleId = auth()->user()->role_id;
+        $transactions = Transactions::with('category');
+        if ($roleId != 1) $transactions->where('user_id', auth()->user()->id);
+        return view('admin.financehub.transactions.index', ['transactions' => $transactions->get()]);
     }
 
     /**
