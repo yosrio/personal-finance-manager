@@ -16,24 +16,33 @@ use App\Http\Controllers\Admin\FinanceHub;
 */
 
 Route::group([
-    'middleware' => ['auth'],
+    'middleware' => ['auth','role_validate:financehub'],
     'prefix' => '/financehub',
     'as' => 'financehub',
     ], function () {
-        Route::get('/categories', [FinanceHub\CategoriesController::class, 'index'])->name('_categories');
-        Route::post('/categories', [FinanceHub\CategoriesController::class, 'save'])->name('_categories_save');
-        Route::get('/categories/add', [FinanceHub\CategoriesController::class, 'addOrUpdate'])->name('_categories_add');
-        Route::get('/categories/delete/{id}', [FinanceHub\CategoriesController::class, 'delete'])->name('_categories_delete');
-        Route::get('/categories/update/{id}', [FinanceHub\CategoriesController::class, 'addOrUpdate'])->name('_categories_update');
+        Route::group(['middleware' => ['role_validate:financehub_categories'], 'prefix' => 'categories', 'as' => '_categories'], function () {
+            Route::get('/', [FinanceHub\CategoriesController::class, 'index']);
+            Route::post('/', [FinanceHub\CategoriesController::class, 'save'])->name('_save');
+            Route::get('/add', [FinanceHub\CategoriesController::class, 'addOrUpdate'])->name('_add');
+            Route::get('/delete/{id}', [FinanceHub\CategoriesController::class, 'delete'])->name('_delete');
+            Route::get('/update/{id}', [FinanceHub\CategoriesController::class, 'addOrUpdate'])->name('_update');
+        });
 
-        Route::get('/transactions', [FinanceHub\TransactionController::class, 'index'])->name('_transactions');
-        Route::post('/transactions', [FinanceHub\TransactionController::class, 'save'])->name('_transactions_save');
-        Route::get('/transactions/add', [FinanceHub\TransactionController::class, 'addOrUpdate'])->name('_transactions_add');
-        Route::get('/transactions/delete/{id}', [FinanceHub\TransactionController::class, 'delete'])->name('_transactions_delete');
-        Route::get('/transactions/update/{id}', [FinanceHub\TransactionController::class, 'addOrUpdate'])->name('_transactions_update');
+        Route::group(['middleware' => ['role_validate:financehub_transactions'], 'prefix' => 'transactions', 'as' => '_transactions'], function () {
+            Route::get('/', [FinanceHub\TransactionController::class, 'index']);
+            Route::post('/', [FinanceHub\TransactionController::class, 'save'])->name('_save');
+            Route::get('/add', [FinanceHub\TransactionController::class, 'addOrUpdate'])->name('_add');
+            Route::get('/delete/{id}', [FinanceHub\TransactionController::class, 'delete'])->name('_delete');
+            Route::get('/update/{id}', [FinanceHub\TransactionController::class, 'addOrUpdate'])->name('_update');
+        });
 
-        Route::get('/budgets', [FinanceHub\BudgetController::class, 'index'])->name('_budgets');
-        Route::get('/financial-insights', [FinanceHub\FinancialInsightController::class, 'index'])->name('_financial_insights');
+        Route::group(['middleware' => ['role_validate:financehub_budgets'], 'prefix' => 'budgets', 'as' => '_budgets'], function () {
+            Route::get('/', [FinanceHub\BudgetController::class, 'index']);
+        });
+
+        Route::group(['middleware' => ['role_validate:financehub_budgets'], 'prefix' => 'financial-insights', 'as' => '_financial_insights'], function () {
+            Route::get('/', [FinanceHub\FinancialInsightController::class, 'index']);
+        });
 });
 
 Route::group([
@@ -55,7 +64,7 @@ Route::group([
 });
 
 Route::group([
-    'middleware' => ['auth'],
+    'middleware' => ['auth','role_validate:users'],
     'prefix' => '/users',
     'as' => 'users',
     ], function () {
@@ -77,7 +86,7 @@ Route::group([
 });
 
 Route::group([
-    'middleware' => ['auth'],
+    'middleware' => ['auth','role_validate:roles'],
     'prefix' => '/roles',
     'as' => 'roles',
     ], function () {
@@ -89,7 +98,7 @@ Route::group([
 });
 
 Route::group([
-    'middleware' => ['auth'],
+    'middleware' => ['auth','role_validate:menus'],
     'prefix' => '/menus',
     'as' => 'menus',
     ], function () {
@@ -105,22 +114,31 @@ Route::group([
     'prefix' => '/settings',
     'as' => 'settings',
     ], function () {
-        Route::get('/', [Admin\SettingController::class, 'index']);
-        Route::get('/configuration', [Admin\SettingController::class, 'configuration'])->name('_configuration');
-        Route::post('/configuration', [Admin\SettingController::class, 'configurationSave'])->name('_configuration_save');
-        Route::get('/integration', [Admin\SettingController::class, 'integration'])->name('_integration');
-        Route::get('/integration/add', [Admin\SettingController::class, 'integrationAddOrUpdate'])->name('_integration_add');
-        Route::get('/integration/{id}', [Admin\SettingController::class, 'integrationAddOrUpdate'])->name('_integration_update');
-        Route::post('/integration', [Admin\SettingController::class, 'integrationSave'])->name('_integration_save');
-        Route::get('/cache-management', [Admin\CacheController::class, 'cache'])->name('_cache_management');
-        Route::get('/cache-management/all', [Admin\CacheController::class, 'cacheAll'])->name('_cache_all');
-        Route::get('/cache-management/config', [Admin\CacheController::class, 'cacheConfig'])->name('_cache_config');
-        Route::get('/cache-management/route', [Admin\CacheController::class, 'cacheRoute'])->name('_cache_route');
-        Route::get('/cache-management/view', [Admin\CacheController::class, 'cacheView'])->name('_cache_view');
+        Route::get('/', [Admin\DashboardController::class, 'index']);
+
+        Route::group(['middleware' => ['role_validate:settings_configuration'], 'prefix' => 'configuration', 'as' => '_configuration'], function () {
+            Route::get('/', [Admin\SettingController::class, 'configuration']);
+            Route::post('/', [Admin\SettingController::class, 'configurationSave'])->name('_save');
+        });
+
+        Route::group(['middleware' => ['role_validate:settings_integration'], 'prefix' => 'integration', 'as' => '_integration'], function () {
+            Route::get('/', [Admin\SettingController::class, 'integration']);
+            Route::get('/add', [Admin\SettingController::class, 'integrationAddOrUpdate'])->name('_add');
+            Route::get('/{id}', [Admin\SettingController::class, 'integrationAddOrUpdate'])->name('_update');
+            Route::post('/', [Admin\SettingController::class, 'integrationSave'])->name('_save');
+        });
+
+        Route::group(['middleware' => ['role_validate:settings_cache_management'], 'prefix' => 'cache-management', 'as' => '_cache'], function () {
+            Route::get('/', [Admin\CacheController::class, 'cache'])->name('_management');
+            Route::get('/all', [Admin\CacheController::class, 'cacheAll'])->name('_all');
+            Route::get('/config', [Admin\CacheController::class, 'cacheConfig'])->name('_config');
+            Route::get('/route', [Admin\CacheController::class, 'cacheRoute'])->name('_route');
+            Route::get('/view', [Admin\CacheController::class, 'cacheView'])->name('_view');
+        });
 });
 
 Route::group([
-    'middleware' => ['auth'],
+    'middleware' => ['auth','role_validate'],
     'prefix' => '/reports',
     'as' => 'reports',
     ], function () {

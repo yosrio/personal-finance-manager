@@ -13,6 +13,7 @@ class Kernel extends HttpKernel
      */
     protected $routeMiddleware = [
         'token.auth.basic' => \App\Http\Middleware\Api\Rest\TokenBasicAuth::class,
+        'role_validate' => \App\Http\Middleware\RoleValidateMiddleware::class,
     ];
 
     /**
